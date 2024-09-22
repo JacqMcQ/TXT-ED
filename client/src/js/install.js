@@ -1,4 +1,6 @@
 const butInstall = document.getElementById('buttonInstall');
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 // Logic for installing the PWA
 // TODO: Add an event handler to the `beforeinstallprompt` event
