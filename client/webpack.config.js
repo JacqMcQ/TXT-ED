@@ -8,22 +8,65 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = () => {
   return {
-    mode: 'development',
+    mode: "production", 
     entry: {
-      main: './src/js/index.js',
-      install: './src/js/install.js'
+      main: "./src/js/index.js", // Ensure this path is correct
+      install: "./src/js/install.js", // Ensure this path is correct
     },
     output: {
-      filename: '[name].bundle.js',
-      path: path.resolve(__dirname, 'dist'),
+      filename: "[name].bundle.js",
+      path: path.resolve(__dirname, "dist"), // Output folder for built files
+      clean: true, // Optional: cleans the output directory before each build
     },
     plugins: [
-      
+      new HtmlWebpackPlugin({
+        template: "index.html", // Adjust the path to your HTML template
+        title: "TXT-ED",
+      }),
+
+      // Inject custom service worker
+      new InjectManifest({
+        swSrc: "./src-sw.js", 
+        swDest: "service-worker.js",
+      }),
+
+      // Generates the PWA manifest file
+      new WebpackPwaManifest({
+        name: "Text Editor",
+        short_name: "Editor",
+        description: "A simple text editor that works offline",
+        background_color: "#ffffff",
+        theme_color: "#317EFB",
+        start_url: "./",
+        publicPath: "./",
+        icons: [
+          {
+            src: path.resolve("src/images/logo.png"), 
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join("assets", "icons"),
+          },
+        ],
+      }),
     ],
 
     module: {
       rules: [
-        
+        // CSS Loader to handle CSS files
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+        },
+        // Babel Loader to transpile modern JavaScript
+        {
+          test: /\.m?js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+            },
+          },
+        },
       ],
     },
   };
