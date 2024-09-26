@@ -10,17 +10,17 @@ module.exports = () => {
   return {
     mode: "production", 
     entry: {
-      main: "./src/js/index.js", // Ensure this path is correct
-      install: "./src/js/install.js", // Ensure this path is correct
+      main: "./src/js/index.js", 
+      install: "./src/js/install.js", 
     },
     output: {
       filename: "[name].bundle.js",
       path: path.resolve(__dirname, "dist"), // Output folder for built files
-      clean: true, // Optional: cleans the output directory before each build
+      clean: true, 
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "index.html", // Adjust the path to your HTML template
+        template: "index.html", 
         title: "TXT-ED",
       }),
 
@@ -46,9 +46,11 @@ module.exports = () => {
             destination: path.join("assets", "icons"),
           },
         ],
+          // Specify the output location for the manifest file
+        filename: 'manifest.json',
       }),
     ],
-
+    
     module: {
       rules: [
         // CSS Loader to handle CSS files
