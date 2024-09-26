@@ -32,8 +32,8 @@ module.exports = () => {
 
       // Generates the PWA manifest file
       new WebpackPwaManifest({
-        name: "Text Editor",
-        short_name: "Editor",
+        name: "JATE",
+        short_name: "TXT-ED",
         description: "A simple text editor that works offline",
         background_color: "#ffffff",
         theme_color: "#317EFB",
